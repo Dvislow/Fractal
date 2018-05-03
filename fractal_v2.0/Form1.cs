@@ -99,7 +99,7 @@ namespace fractal_v2._0
             Gl.glViewport(0, 0, fractPicture.Width, fractPicture.Height);
             Gl.glMatrixMode(Gl.GL_PROJECTION);
             Gl.glLoadIdentity();
-            Glu.gluOrtho2D((float)(fractPicture.Width / 2 * (-1)), (float)(fractPicture.Width / 2), (float)(fractPicture.Height / 2 * (-1)), (float)(fractPicture.Height / 2));
+            Glu.gluOrtho2D(0.0, (float)(fractPicture.Width), 0.0, (float)(fractPicture.Height));
             Gl.glLoadIdentity();
             Gl.glClear(Gl.GL_COLOR_BUFFER_BIT);
             fractPicture.Invalidate();
@@ -166,8 +166,8 @@ namespace fractal_v2._0
                 image.Save(saveFileDialog1.FileName);
                 rander.Enabled = true;
             }
-            catch (Exception a) {
-                
+            catch (Exception) {
+                rander.Enabled = true;
             }
         }
 

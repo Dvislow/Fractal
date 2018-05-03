@@ -232,7 +232,7 @@
             // rander
             // 
             this.rander.Enabled = true;
-            this.rander.Interval = 10;
+            this.rander.Interval = 5;
             this.rander.Tick += new System.EventHandler(this.rander_Tick);
             // 
             // trackBar1
