@@ -57,10 +57,13 @@ namespace fractal_v2._0
             for (int i = 1; i < n; i++)
             {
 
-                Pair forRandom = ABCD[rnd.Next(0, 3)];
+                Pair forRandom = ABCD[rnd.Next(0, 4)];
                 Xi[i] = new Pair();
-                Xi[i].x = (forRandom.x - Xi[i - 1].x) / q.x * q.y;
-                Xi[i].y = (forRandom.y - Xi[i - 1].y) / q.x * q.y;
+                //Xi[i].x = Xi[i - 1].x+(forRandom.x - Xi[i - 1].x) / q.x * q.y;
+                //Xi[i].y = Xi[i - 1].y+(forRandom.y - Xi[i - 1].y) / q.x * q.y;
+
+                //Xi[i].x = (forRandom.x - Xi[i - 1].x) / q.x * q.y;
+                //Xi[i].y = (forRandom.y - Xi[i - 1].y) / q.x * q.y;
             }
 
             
@@ -151,7 +154,7 @@ namespace fractal_v2._0
                 Gl.glEnd();
                 Gl.glPopMatrix();
                 Gl.glFlush();
-                Bitmap image = new Bitmap(900, 900);
+                Bitmap image = new Bitmap(500, 500);
                 BitmapData imgData = image.LockBits(new Rectangle(0, 0, image.Width, image.Height), ImageLockMode.WriteOnly, PixelFormat.Format32bppArgb);
 
                 Gl.glPushClientAttrib(Gl.GL_CLIENT_PIXEL_STORE_BIT);
