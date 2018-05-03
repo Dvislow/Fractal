@@ -17,8 +17,6 @@ namespace fractal_v2._0
 {
     public partial class Form1 : Form
     {
-        [DllImport("user32.dll")]
-        static extern short GetAsyncKeyState(System.Windows.Forms.Keys vKey);
 
         Pair[] ABCD;
         Pair X0;
@@ -76,13 +74,18 @@ namespace fractal_v2._0
             Gl.glLoadIdentity();
             Gl.glPushMatrix();
             Gl.glScaled(zoom, zoom, 0);
-            Gl.glTranslated(a, b, 0);
+            Gl.glTranslated(a-1, b-1, 0);
             
             Gl.glColor3d(0, 0, 0);
             Gl.glBegin(Gl.GL_POINTS);
+            Gl.glVertex2d(ABCD[0].x, ABCD[0].y);
+            Gl.glVertex2d(ABCD[1].x, ABCD[1].y);
+            Gl.glVertex2d(ABCD[2].x, ABCD[2].y);
+            Gl.glVertex2d(ABCD[3].x, ABCD[3].y);
+            Gl.glVertex2d(X0.x, X0.y);
             for (int i = 1; i < ni; i++)
             {
-               // Gl.glColor3d(rnd.Next(0, 255), rnd.Next(0, 255), rnd.Next(0, 255));
+                //Gl.glColor3i(rnd.Next(0, 255), rnd.Next(0, 255), rnd.Next(0, 255));
                 Gl.glVertex2d(Xi[i].x, Xi[i].y);
             }
             Gl.glEnd();
@@ -99,7 +102,7 @@ namespace fractal_v2._0
             Gl.glViewport(0, 0, fractPicture.Width, fractPicture.Height);
             Gl.glMatrixMode(Gl.GL_PROJECTION);
             Gl.glLoadIdentity();
-            Glu.gluOrtho2D(0.0, (float)(fractPicture.Width), 0.0, (float)(fractPicture.Height));
+            Glu.gluOrtho2D(0, (float)(fractPicture.Width), 0, (float)(fractPicture.Height));
             Gl.glLoadIdentity();
             Gl.glClear(Gl.GL_COLOR_BUFFER_BIT);
             fractPicture.Invalidate();
@@ -126,6 +129,7 @@ namespace fractal_v2._0
             n = Int32.Parse(count.Text);
             Save = qi.Text.Split('/');
             q = new Pair((Double.Parse(Save[0]) + Double.Parse(Save[1])), Double.Parse(Save[0]));
+            rander.Enabled = true;
             calc_fract();
             Draw_fract();
             
@@ -141,14 +145,20 @@ namespace fractal_v2._0
                 saveFileDialog1.Title = "Save an Image File";
                 saveFileDialog1.ShowDialog();
                 Gl.glClear(Gl.GL_COLOR_BUFFER_BIT | Gl.GL_DEPTH_BUFFER_BIT);
+                //Gl.glViewport(0, 0, 900, 900);
                 Gl.glClearColor(255, 255, 255, 1);
                 Gl.glLoadIdentity();
                 Gl.glPushMatrix();
                 Gl.glScaled(1, 1, 0);
-                Gl.glTranslated(0, 0, 0);
+                Gl.glTranslated(-1, -1, 0);
 
                 Gl.glColor3d(0, 0, 0);
                 Gl.glBegin(Gl.GL_POINTS);
+                Gl.glVertex2d(ABCD[0].x, ABCD[0].y);
+                Gl.glVertex2d(ABCD[1].x, ABCD[1].y);
+                Gl.glVertex2d(ABCD[2].x, ABCD[2].y);
+                Gl.glVertex2d(ABCD[3].x, ABCD[3].y);
+                Gl.glVertex2d(X0.x, X0.y);
                 for (int i = 1; i < n; i++)
                     Gl.glVertex2d(Xi[i].x, Xi[i].y);
                 Gl.glEnd();
