@@ -59,8 +59,8 @@ namespace fractal_v2._0
 
                 Pair forRandom = ABCD[rnd.Next(0, 4)];
                 Xi[i] = new Pair();
-                //Xi[i].x = Xi[i - 1].x+(forRandom.x - Xi[i - 1].x) / q.x * q.y;
-                //Xi[i].y = Xi[i - 1].y+(forRandom.y - Xi[i - 1].y) / q.x * q.y;
+                Xi[i].x = Xi[i - 1].x+(forRandom.x - Xi[i - 1].x) / q.x * q.y;
+                Xi[i].y = Xi[i - 1].y+(forRandom.y - Xi[i - 1].y) / q.x * q.y;
 
                 //Xi[i].x = (forRandom.x - Xi[i - 1].x) / q.x * q.y;
                 //Xi[i].y = (forRandom.y - Xi[i - 1].y) / q.x * q.y;
