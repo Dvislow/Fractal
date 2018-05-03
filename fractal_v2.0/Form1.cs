@@ -104,6 +104,9 @@ namespace fractal_v2._0
 
         private void StarterButton_Click(object sender, EventArgs e)
         {
+            zoom = 1;
+            a = 0;
+            b = 0;
             ni = 0;
             String[] Save;
             ABCD = new Pair[4];
