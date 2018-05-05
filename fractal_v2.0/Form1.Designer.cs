@@ -58,6 +58,7 @@
             this.down = new System.Windows.Forms.Button();
             this.plus = new System.Windows.Forms.Button();
             this.minus = new System.Windows.Forms.Button();
+            this.error = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.BigFuckigZoom)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.trackBar1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.trackBar2)).BeginInit();
@@ -329,11 +330,22 @@
             this.minus.UseVisualStyleBackColor = true;
             this.minus.Click += new System.EventHandler(this.minus_Click);
             // 
+            // error
+            // 
+            this.error.AutoSize = true;
+            this.error.Location = new System.Drawing.Point(528, 533);
+            this.error.Name = "error";
+            this.error.Size = new System.Drawing.Size(35, 13);
+            this.error.TabIndex = 27;
+            this.error.Text = "label8";
+            this.error.Visible = false;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(835, 558);
+            this.Controls.Add(this.error);
             this.Controls.Add(this.minus);
             this.Controls.Add(this.down);
             this.Controls.Add(this.right);
@@ -403,6 +415,7 @@
         private System.Windows.Forms.Button down;
         private System.Windows.Forms.Button plus;
         private System.Windows.Forms.Button minus;
+        private System.Windows.Forms.Label error;
     }
 }
 

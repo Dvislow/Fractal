@@ -18,6 +18,7 @@ namespace fractal_v2._0
     public partial class Form1 : Form
     {
 
+        bool calc=false;
         Pair[] ABCD;
         Pair X0;
         int n, ni=0;
@@ -47,7 +48,7 @@ namespace fractal_v2._0
         private void calc_fract()
         {
 
-
+            calc = true;
             Random rnd = new Random();
             Xi = new Pair[n];
             Xi[0] = X0;
@@ -55,11 +56,12 @@ namespace fractal_v2._0
             for (int i = 1; i < n; i++)
             {
 
-                Pair forRandom = ABCD[rnd.Next(0, 4)];
+               
                 Xi[i] = new Pair();
+                Pair forRandom = ABCD[rnd.Next(0, 4)];
                 Xi[i].x = Xi[i - 1].x+(forRandom.x - Xi[i - 1].x) / q.x * q.y;
                 Xi[i].y = Xi[i - 1].y+(forRandom.y - Xi[i - 1].y) / q.x * q.y;
-
+                //Pair forRandom = ABCD[rnd.Next(0, 3)];
                 //Xi[i].x = (forRandom.x - Xi[i - 1].x) / q.x * q.y;
                 //Xi[i].y = (forRandom.y - Xi[i - 1].y) / q.x * q.y;
             }
@@ -110,35 +112,77 @@ namespace fractal_v2._0
 
         private void StarterButton_Click(object sender, EventArgs e)
         {
+            if (error.Visible) {
+                error.Visible = false;
+            }
             zoom = 1;
             a = 0;
             b = 0;
             ni = 0;
-            String[] Save;
-            ABCD = new Pair[4];
-            Save = A_box.Text.Split(' ');
-            ABCD[0] = new Pair(Double.Parse(Save[0]), Double.Parse(Save[1]));
-            Save = B_box.Text.Split(' ');
-            ABCD[1] = new Pair(Double.Parse(Save[0]), Double.Parse(Save[1]));
-            Save = C_box.Text.Split(' ');
-            ABCD[2] = new Pair(Double.Parse(Save[0]), Double.Parse(Save[1]));
-            Save = D_box.Text.Split(' ');
-            ABCD[3] = new Pair(Double.Parse(Save[0]), Double.Parse(Save[1]));
-            Save = forX0.Text.Split(' ');
-            X0 = new Pair(Double.Parse(Save[0]), Double.Parse(Save[1]));
-            n = Int32.Parse(count.Text);
-            Save = qi.Text.Split('/');
-            q = new Pair((Double.Parse(Save[0]) + Double.Parse(Save[1])), Double.Parse(Save[0]));
-            rander.Enabled = true;
-            calc_fract();
-            Draw_fract();
+            try
+            {
+                String[] Save;
+                ABCD = new Pair[4];
+                char[] split = { ';', ':', '(', ')', ' ' };
+                Save = A_box.Text.Split(split, StringSplitOptions.RemoveEmptyEntries);
+                if (Save.Length != 2)
+                {
+                    throw new Exception("A");
+                }
+                ABCD[0] = new Pair(Double.Parse(Save[0].Replace('.', ',')), Double.Parse(Save[1].Replace('.', ',')));
+                Save = B_box.Text.Split(split, StringSplitOptions.RemoveEmptyEntries);
+                if (Save.Length != 2)
+                {
+                    throw new Exception("B");
+                }
+                ABCD[1] = new Pair(Double.Parse(Save[0].Replace('.', ',')), Double.Parse(Save[1].Replace('.', ',')));
+                Save = C_box.Text.Split(split, StringSplitOptions.RemoveEmptyEntries);
+                if (Save.Length != 2)
+                {
+                    throw new Exception("C");
+                }
+                ABCD[2] = new Pair(Double.Parse(Save[0].Replace('.', ',')), Double.Parse(Save[1].Replace('.', ',')));
+                Save = D_box.Text.Split(split, StringSplitOptions.RemoveEmptyEntries);
+                if (Save.Length != 2)
+                {
+                    throw new Exception("D");
+                }
+                ABCD[3] = new Pair(Double.Parse(Save[0].Replace('.', ',')), Double.Parse(Save[1].Replace('.', ',')));
+                Save = forX0.Text.Split(split, StringSplitOptions.RemoveEmptyEntries);
+                if (Save.Length != 2)
+                {
+                    throw new Exception("X0");
+                }
+                X0 = new Pair(Double.Parse(Save[0].Replace('.', ',')), Double.Parse(Save[1].Replace('.', ',')));
+                n = Int32.Parse(count.Text);
+                char[] split2 = { '/', ' ', '(', ')' };
+                Save = qi.Text.Split(split2, StringSplitOptions.RemoveEmptyEntries);
+                if (Save.Length != 2)
+                {
+                    throw new Exception("A");
+                }
+                q = new Pair((Double.Parse(Save[0].Replace('.', ',')) + Double.Parse(Save[1].Replace('.', ','))), Double.Parse(Save[0].Replace('.', ',')));
+
+                rander.Enabled = true;
+                calc_fract();
+                Draw_fract();
+            }
+            catch (Exception a)
+            {
+                error.Text = "Wrong Data " + a.Message;
+                error.Visible = true;
+                rander.Enabled = false;
+
+            }
             
+
         }
 
         private void SaveButton_Click(object sender, EventArgs e)
         {
             try
             {
+                if (!calc) throw new Exception("Not calculated");
                 rander.Enabled = false;
                 SaveFileDialog saveFileDialog1 = new SaveFileDialog();
                 saveFileDialog1.Filter = "JPeg Image|*.jpg|Bitmap Image|*.bmp|Gif Image|*.gif";
@@ -176,9 +220,12 @@ namespace fractal_v2._0
                 image.Save(saveFileDialog1.FileName);
                 rander.Enabled = true;
             }
-            catch (Exception) {
-                rander.Enabled = true;
+            catch (Exception a) {
+                error.Text = "Error: " + a.Message;
+                error.Visible = true;
+                if (calc == true) rander.Enabled = true;
             }
+           
         }
 
         private void BigFuckigZoom_Scroll(object sender, EventArgs e)
